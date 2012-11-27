@@ -17,10 +17,10 @@
 		6B00F3C1165289C10015D8C5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3C0165289C10015D8C5 /* Default@2x.png */; };
 		6B00F3C3165289C10015D8C5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3C2165289C10015D8C5 /* Default-568h@2x.png */; };
 		6B00F3C6165289C10015D8C5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3C4165289C10015D8C5 /* MainStoryboard.storyboard */; };
-		6B00F3C9165289C10015D8C5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B00F3C8165289C10015D8C5 /* RootViewController.m */; };
+		6B0AFA661663C43800F68040 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0AFA651663C43800F68040 /* RootViewController.m */; };
 		6B3049A1165CF80B00CB407B /* paletteViewImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B3049A0165CF80B00CB407B /* paletteViewImage@2x.png */; };
+		6B37839D166509530051AF1C /* DrawHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B37839C166509530051AF1C /* DrawHelper.m */; };
 		6BE9364B165CE15D0063F9E4 /* paletteViewImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BE93649165CE15D0063F9E4 /* paletteViewImage.png */; };
-		6BEF9D7216539D90004C0B14 /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF9D7116539D90004C0B14 /* DrawView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,12 +38,12 @@
 		6B00F3C0165289C10015D8C5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6B00F3C2165289C10015D8C5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6B00F3C5165289C10015D8C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		6B00F3C7165289C10015D8C5 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		6B00F3C8165289C10015D8C5 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		6B0AFA641663C43800F68040 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Contrlollers/RootViewController.h; sourceTree = "<group>"; };
+		6B0AFA651663C43800F68040 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Contrlollers/RootViewController.m; sourceTree = "<group>"; };
 		6B3049A0165CF80B00CB407B /* paletteViewImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paletteViewImage@2x.png"; path = "Images/paletteViewImage@2x.png"; sourceTree = "<group>"; };
+		6B37839B166509530051AF1C /* DrawHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawHelper.h; path = DrawMe/Classes/DrawHelper.h; sourceTree = "<group>"; };
+		6B37839C166509530051AF1C /* DrawHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawHelper.m; path = DrawMe/Classes/DrawHelper.m; sourceTree = "<group>"; };
 		6BE93649165CE15D0063F9E4 /* paletteViewImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paletteViewImage.png; path = Images/paletteViewImage.png; sourceTree = "<group>"; };
-		6BEF9D7016539D90004C0B14 /* DrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawView.h; path = DrawMe/Views/DrawView.h; sourceTree = "<group>"; };
-		6BEF9D7116539D90004C0B14 /* DrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawView.m; path = DrawMe/Views/DrawView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				6B00F3D6165294000015D8C5 /* Controllers */,
-				6B00F3D5165293F00015D8C5 /* Views */,
+				6B00F3D5165293F00015D8C5 /* Classes */,
 				6BE93648165CDDE60063F9E4 /* Images */,
 				6B5817951653BCDD00088FA0 /* Extensions */,
 				6B00F3BB165289C10015D8C5 /* AppDelegate.h */,
@@ -116,21 +116,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		6B00F3D5165293F00015D8C5 /* Views */ = {
+		6B00F3D5165293F00015D8C5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6BEF9D7016539D90004C0B14 /* DrawView.h */,
-				6BEF9D7116539D90004C0B14 /* DrawView.m */,
+				6B37839B166509530051AF1C /* DrawHelper.h */,
+				6B37839C166509530051AF1C /* DrawHelper.m */,
 			);
-			name = Views;
+			name = Classes;
 			path = ..;
 			sourceTree = "<group>";
 		};
 		6B00F3D6165294000015D8C5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6B00F3C7165289C10015D8C5 /* RootViewController.h */,
-				6B00F3C8165289C10015D8C5 /* RootViewController.m */,
+				6B0AFA641663C43800F68040 /* RootViewController.h */,
+				6B0AFA651663C43800F68040 /* RootViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -221,8 +221,8 @@
 			files = (
 				6B00F3B9165289C10015D8C5 /* main.m in Sources */,
 				6B00F3BD165289C10015D8C5 /* AppDelegate.m in Sources */,
-				6B00F3C9165289C10015D8C5 /* RootViewController.m in Sources */,
-				6BEF9D7216539D90004C0B14 /* DrawView.m in Sources */,
+				6B0AFA661663C43800F68040 /* RootViewController.m in Sources */,
+				6B37839D166509530051AF1C /* DrawHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

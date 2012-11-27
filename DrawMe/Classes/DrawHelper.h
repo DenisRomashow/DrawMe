@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DrawView : UIView
+@interface DrawHelper : NSObject
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) CGColorRef color;

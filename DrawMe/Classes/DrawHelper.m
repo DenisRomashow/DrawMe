@@ -6,26 +6,27 @@
 //  Copyright (c) 2012 DenisRomashow Home Dev. All rights reserved.
 //
 
-#import "DrawView.h"
+#import "DrawHelper.h"
 
-@interface DrawView ()
+@interface DrawHelper ()
 {
     UIImage *_currentImage;
     UIImage *_clearImage;
     UIImage *_emptyImage;
-    BOOL isClearImage;
+    BOOL _isClearImage;
 }
 @end
 
 
-@implementation DrawView
+@implementation DrawHelper
 
+
+#pragma mark -
+#pragma mark Drawing
 - (void)drawLineFromPoint:(CGPoint)pt toPoint:(CGPoint)pt2
 {
     [self drawLinetoPoints:_imageView fromPoint:pt toPoint:pt2];
 }
-#pragma mark -
-#pragma mark Drawing
 
 -(void)drawLinetoPoints:(UIView *)onView fromPoint:(CGPoint)fromPt toPoint:(CGPoint)toPt
 {
@@ -72,7 +73,7 @@
         CGContextAddLineToPoint(context, point.x, point.y);
     }
     CGContextStrokePath(context);
-    isClearImage = YES;
+    _isClearImage = YES;
   
     [self combineImage:UIGraphicsGetImageFromCurrentImageContext()];
 
@@ -89,21 +90,21 @@
         _clearImage   = [UIImage new];
     }
 
-    UIGraphicsBeginImageContext(self.frame.size);
+    UIGraphicsBeginImageContext(overlayImage.size);
     
-    if (isClearImage) {
+    if (_isClearImage) {
         [_clearImage drawAtPoint:CGPointZero];
-        CGRect imageRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+        CGRect imageRect = CGRectMake(0, 0, overlayImage.size.width, overlayImage.size.height);
         [overlayImage drawInRect:imageRect blendMode:kCGBlendModeNormal alpha:1.0];
 
         _clearImage  = UIGraphicsGetImageFromCurrentImageContext();
         [_imageView setImage:_clearImage];
 
-        isClearImage = NO;
+        _isClearImage = NO;
     }
     else {
         [[_imageView image] drawAtPoint:CGPointZero];
-        CGRect imageRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+        CGRect imageRect = CGRectMake(0, 0, overlayImage.size.width, overlayImage.size.height);
         [overlayImage drawInRect:imageRect blendMode:kCGBlendModeNormal alpha:1.0];
 
         _currentImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -114,7 +115,7 @@
 }
 
 #pragma mark -
-#pragma mark Claering
+#pragma mark Clearing
 
 -(void)clearView {
     if (!_emptyImage) {

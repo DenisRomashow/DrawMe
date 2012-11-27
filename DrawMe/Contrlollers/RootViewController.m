@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-#import "DrawView.h"
+#import "DrawHelper.h"
 
 #define redColor [UIColor redColor]
 #define blackColor [UIColor blackColor]
@@ -27,10 +27,13 @@ static const CGFloat kPenWidth    = 2;
 static const CGFloat kCrayonWidth = 7;
 static const CGFloat kUsualWidth  = 3;
 
+static const int kEpsilontNumber = 2;
+static const int kSegmentsNumber = 4;
+
 
 @interface RootViewController ()
 {
-    DrawView *_drawView;
+    DrawHelper *_drawHelper;
     UIImageView *_paletteView;
     UIImage *_paletteImage;
     UIImage *_cleanImage;
@@ -38,10 +41,10 @@ static const CGFloat kUsualWidth  = 3;
     CGColorRef _currentColor;
     
     NSMutableArray *_pointsList;
-    NSInteger pointsCount;
+    NSInteger _pointsCount;
 
-    BOOL isPaletteOpend;
-    BOOL isOneFingerTal;
+    BOOL _isPaletteOpend;
+    BOOL _isOneFingerTal;
 }
 @end
 
@@ -56,16 +59,31 @@ static const CGFloat kUsualWidth  = 3;
     _pointsList = [NSMutableArray array];
     _currentColor = [UIColor blueColor].CGColor;
     
-    _drawView = [DrawView new];
-    [_drawView setWidth:kUsualWidth];
-    [_drawView setColor:_currentColor];
+    _drawHelper = [DrawHelper new];
+    [_drawHelper setWidth:kUsualWidth];
+    [_drawHelper setColor:_currentColor];
     
-    _drawView.imageView = self.viewForDraw;
+    _drawHelper.imageView = self.viewForDraw;
     
-    _paletteView = [[UIImageView alloc] initWithFrame:CGRectMake(_drawView.imageView.frame.size.width + kPaletteButtonWidth*6, 0, kPaletteViewWidth, kPaletteViewHeight)];
+    _paletteView = [[UIImageView alloc] initWithFrame:CGRectMake(_drawHelper.imageView.frame.size.width + kPaletteButtonWidth*kCrayonWidth, 0, kPaletteViewWidth, kPaletteViewHeight)];
 
+    [self loadPaletteViewItems];
+    
+    [_drawHelper.imageView addSubview:_paletteView];
+    
+    _isPaletteOpend = NO;
+    _pointsCount = [_pointsList count];
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                               action:@selector(showPalette)];
+    doubleTap.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:doubleTap];
+}
+#pragma mark - addToViewDidLoad
+-(void) loadPaletteViewItems
+{
     _paletteImage = [UIImage imageNamed:@"paletteViewImage.png"];
-
+    
     UIButton *colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [colorButton setFrame:CGRectMake(kPaletteButtonPosition, kPaletteButtonPosition, kPaletteButtonWidth,kPaletteButtonHeight)];
     [colorButton setTitle:@"color" forState:UIControlStateNormal];
@@ -89,28 +107,15 @@ static const CGFloat kUsualWidth  = 3;
     [eraseButton setTitle:@"Erase" forState:UIControlStateNormal];
     [eraseButton addTarget:self action:@selector(eraseButtonDidPressed:) forControlEvents:UIControlStateNormal];
     
-    _paletteView.image = _paletteImage;
+    [_paletteView setImage:_paletteImage];
+    [_paletteView setUserInteractionEnabled:YES];
     
     [_paletteView addSubview:colorButton];
     [_paletteView addSubview:penButton];
     [_paletteView addSubview:crayonButton];
     [_paletteView addSubview:eraseButton];
-    _paletteView.userInteractionEnabled = YES;
-    
-    
-    [_drawView.imageView addSubview:_paletteView];
-    
-    
-
-    isPaletteOpend = NO;
-    
-    pointsCount = [_pointsList count];
-    
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self
-                                                                               action:@selector(showPalette)];
-    doubleTap.numberOfTapsRequired = 2;
-    [self.view addGestureRecognizer:doubleTap];
 }
+
 
 #pragma mark - Touches
 
@@ -127,14 +132,14 @@ static const CGFloat kUsualWidth  = 3;
 {
     [super touchesMoved:touches withEvent:event];
     
-        if (!pointsCount) {
-            pointsCount = 0;
+        if (!_pointsCount) {
+            _pointsCount = 0;
         }
 
     [self touchPosition:touches];
-    [_drawView drawLineFromPoint:[[_pointsList objectAtIndex:pointsCount] CGPointValue]
-                             toPoint:[[_pointsList objectAtIndex:pointsCount+1] CGPointValue]];
-    pointsCount++;
+    [_drawHelper drawLineFromPoint:[[_pointsList objectAtIndex:_pointsCount] CGPointValue]
+                             toPoint:[[_pointsList objectAtIndex:_pointsCount+1] CGPointValue]];
+    _pointsCount++;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -143,13 +148,13 @@ static const CGFloat kUsualWidth  = 3;
 
     [self touchPosition:touches];
     
-    NSArray *generalizedPoints = [self douglasPeucker:_pointsList epsilon:2];
-    NSArray *splinePoints = [self catmullRomSpline:generalizedPoints segments:4];
+    NSArray *generalizedPoints = [self douglasPeucker:_pointsList epsilon:kEpsilontNumber];
+    NSArray *splinePoints = [self catmullRomSpline:generalizedPoints segments:kSegmentsNumber];
     
-    [_drawView drawPath: _drawView.imageView WithPoints:splinePoints andColor:_currentColor];
+    [_drawHelper drawPath: _drawHelper.imageView WithPoints:splinePoints andColor:_currentColor];
    
     [_pointsList removeAllObjects];
-    pointsCount = [_pointsList count];
+    _pointsCount = [_pointsList count];
 
 }
 
@@ -161,7 +166,7 @@ static const CGFloat kUsualWidth  = 3;
     [super motionEnded:motion withEvent:event];
     
     if (event.type == UIEventSubtypeMotionShake) {
-        [_drawView clearView];
+        [_drawHelper clearView];
        
     }
      NSLog(@"sheake!");
@@ -179,17 +184,17 @@ static const CGFloat kUsualWidth  = 3;
 #pragma mark - Action Buttons
 -(IBAction)test:(id)sender {
     [_pointsList removeAllObjects];
-    pointsCount = [_pointsList count];
-    [_drawView clearView];
+    _pointsCount = [_pointsList count];
+    [_drawHelper clearView];
 }
 
 -(void)penButtonDidPressed:(UIButton*)button
 {
-    [_drawView setWidth: kPenWidth];
+    [_drawHelper setWidth: kPenWidth];
 }
 -(void)crayonButtonDidPressed:(UIButton*)button
 {
-    [_drawView setWidth: kCrayonWidth];
+    [_drawHelper setWidth: kCrayonWidth];
 }
 -(void)eraseButtonDidPressed:(UIButton*)button
 {
@@ -323,31 +328,32 @@ static const CGFloat kUsualWidth  = 3;
 
 -(void)showPalette
 {
-    if (!isPaletteOpend) {
+    if (!_isPaletteOpend)
+    {
         [UIView animateWithDuration:1 animations:^{
-            [_paletteView setFrame:CGRectMake(_drawView.imageView.frame.size.width - _paletteView.frame.size.width,
+            [_paletteView setFrame:CGRectMake(_drawHelper.imageView.frame.size.width - kPaletteViewWidth,
                                               _paletteView.frame.origin.y,
                                               _paletteView.frame.size.width,
                                               _paletteView.frame.size.height)];
-
         }];
-        isPaletteOpend = YES;
+        _isPaletteOpend = YES;
     }
     
-    else {
+    else
+    {
         [self hidePalette];
-        isPaletteOpend = NO;
+        _isPaletteOpend = NO;
     }
     
     [_pointsList removeAllObjects];
-    pointsCount = [_pointsList count];
+    _pointsCount = [_pointsList count];
 
 }
 
 -(void)hidePalette
 {
     [UIView animateWithDuration:1 animations:^{
-        [_paletteView setFrame:CGRectMake(_drawView.imageView.frame.size.width + _paletteView.frame.size.width,
+        [_paletteView setFrame:CGRectMake(_drawHelper.imageView.frame.size.width + kPaletteViewWidth,
                                           _paletteView.frame.origin.y,
                                           _paletteView.frame.size.width,
                                           _paletteView.frame.size.height)];
