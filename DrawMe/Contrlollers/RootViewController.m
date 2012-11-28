@@ -43,8 +43,11 @@ static const int kSegmentsNumber = 4;
     NSMutableArray *_pointsList;
     NSInteger _pointsCount;
 
-    BOOL _isPaletteOpend;
+    BOOL _isPaletteOpened;
     BOOL _isOneFingerTal;
+    
+    int     _douglasIndex ;
+    float   _douglasMax;
 }
 @end
 
@@ -65,13 +68,15 @@ static const int kSegmentsNumber = 4;
     
     _drawHelper.imageView = self.viewForDraw;
     
-    _paletteView = [[UIImageView alloc] initWithFrame:CGRectMake(_drawHelper.imageView.frame.size.width + kPaletteButtonWidth*kCrayonWidth, 0, kPaletteViewWidth, kPaletteViewHeight)];
-
+    _paletteView = [[UIImageView alloc] initWithFrame:CGRectMake(_drawHelper.imageView.frame.size.width + kPaletteButtonWidth * kCrayonWidth,
+                                                                 0,
+                                                                 kPaletteViewWidth,
+                                                                 kPaletteViewHeight)];
     [self loadPaletteViewItems];
     
     [_drawHelper.imageView addSubview:_paletteView];
     
-    _isPaletteOpend = NO;
+    _isPaletteOpened = NO;
     _pointsCount = [_pointsList count];
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self
@@ -95,15 +100,14 @@ static const int kSegmentsNumber = 4;
     [penButton addTarget:self action:@selector(penButtonDidPressed:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    
     UIButton *crayonButton = [UIButton buttonWithType: UIButtonTypeRoundedRect];
-    [crayonButton setFrame:CGRectMake(kPaletteButtonPosition, kPaletteToolButtonPosition+40, kPaletteButtonWidth,kPaletteButtonHeight)];
+    [crayonButton setFrame:CGRectMake(kPaletteButtonPosition, kPaletteToolButtonPosition + 40, kPaletteButtonWidth,kPaletteButtonHeight)];
     [crayonButton setTitle:@"Crayon" forState:UIControlStateNormal];
     [crayonButton addTarget:self action:@selector(crayonButtonDidPressed:)
            forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *eraseButton = [UIButton buttonWithType: UIButtonTypeRoundedRect];
-    [eraseButton setFrame:CGRectMake(kPaletteButtonPosition, kPaletteToolButtonPosition+80, kPaletteButtonWidth,kPaletteButtonHeight)];
+    [eraseButton setFrame:CGRectMake(kPaletteButtonPosition, kPaletteToolButtonPosition + 80, kPaletteButtonWidth,kPaletteButtonHeight)];
     [eraseButton setTitle:@"Erase" forState:UIControlStateNormal];
     [eraseButton addTarget:self action:@selector(eraseButtonDidPressed:) forControlEvents:UIControlStateNormal];
     
@@ -122,11 +126,8 @@ static const int kSegmentsNumber = 4;
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
-
     [self touchPosition:touches];
-    
 }
-
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -145,7 +146,6 @@ static const int kSegmentsNumber = 4;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
-
     [self touchPosition:touches];
     
     NSArray *generalizedPoints = [self douglasPeucker:_pointsList epsilon:kEpsilontNumber];
@@ -155,7 +155,6 @@ static const int kSegmentsNumber = 4;
    
     [_pointsList removeAllObjects];
     _pointsCount = [_pointsList count];
-
 }
 
 #pragma mark - Motion
@@ -182,6 +181,7 @@ static const int kSegmentsNumber = 4;
 }
 
 #pragma mark - Action Buttons
+
 -(IBAction)test:(id)sender {
     [_pointsList removeAllObjects];
     _pointsCount = [_pointsList count];
@@ -192,29 +192,51 @@ static const int kSegmentsNumber = 4;
 {
     [_drawHelper setWidth: kPenWidth];
 }
+
 -(void)crayonButtonDidPressed:(UIButton*)button
 {
     [_drawHelper setWidth: kCrayonWidth];
 }
+
 -(void)eraseButtonDidPressed:(UIButton*)button
 {
     _currentColor = whiteColor.CGColor;
 }
+
 -(void)greenColorButtonDidPassed:(UIButton*)button
 {
     
 }
+
 #pragma mark - Drawing Smooth
+-(NSArray*)findPointWithMaximumDistance:(NSArray*)points andCount:(int)count
+{
+    _douglasIndex   = 0;
+    _douglasMax     = 0;
+    for(int i = 1; i < count - 1; i++) {
+        CGPoint point = [[points objectAtIndex:i] CGPointValue];
+        CGPoint lineA = [[points objectAtIndex:0] CGPointValue];
+        CGPoint lineB = [[points objectAtIndex:count - 1] CGPointValue];
+        float d = [self perpendicularDistance:point lineA:lineA lineB:lineB];
+        if(d > _douglasMax) {
+            _douglasIndex = i;
+            _douglasMax = d;
+        }
+    }
+    return points;
+}
+
+
 - (NSArray *)douglasPeucker:(NSArray *)points epsilon:(float)epsilon
 {
     int count = [points count];
     if(count < 3) {
         return points;
     }
-    
+//    [points arrayByAddingObjectsFromArray:[self findPointWithMaximumDistance:points andCount:count]];
     //Find the point with the maximum distance
-    float dmax = 0;
-    int index = 0;
+    float dmax  = 0;
+    int   index = 0;
     for(int i = 1; i < count - 1; i++) {
         CGPoint point = [[points objectAtIndex:i] CGPointValue];
         CGPoint lineA = [[points objectAtIndex:0] CGPointValue];
@@ -240,7 +262,6 @@ static const int kSegmentsNumber = 4;
     } else {
         resultList = [NSArray arrayWithObjects:[points objectAtIndex:0], [points objectAtIndex:count - 1],nil];
     }
-    
     return resultList;
 }
 
@@ -328,7 +349,7 @@ static const int kSegmentsNumber = 4;
 
 -(void)showPalette
 {
-    if (!_isPaletteOpend)
+    if (!_isPaletteOpened)
     {
         [UIView animateWithDuration:1 animations:^{
             [_paletteView setFrame:CGRectMake(_drawHelper.imageView.frame.size.width - kPaletteViewWidth,
@@ -336,18 +357,13 @@ static const int kSegmentsNumber = 4;
                                               _paletteView.frame.size.width,
                                               _paletteView.frame.size.height)];
         }];
-        _isPaletteOpend = YES;
-    }
-    
-    else
-    {
+        _isPaletteOpened = YES;
+    } else {
         [self hidePalette];
-        _isPaletteOpend = NO;
+        _isPaletteOpened = NO;
     }
-    
     [_pointsList removeAllObjects];
     _pointsCount = [_pointsList count];
-
 }
 
 -(void)hidePalette

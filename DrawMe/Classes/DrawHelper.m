@@ -25,12 +25,11 @@
 #pragma mark Drawing
 - (void)drawLineFromPoint:(CGPoint)pt toPoint:(CGPoint)pt2
 {
-    [self drawLinetoPoints:_imageView fromPoint:pt toPoint:pt2];
+    [self drawLineOnView:_imageView fromPoint:pt toPoint:pt2];
 }
 
--(void)drawLinetoPoints:(UIView *)onView fromPoint:(CGPoint)fromPt toPoint:(CGPoint)toPt
-{
-   
+-(void)drawLineOnView:(UIView *)onView fromPoint:(CGPoint)fromPt toPoint:(CGPoint)toPt
+{  
     UIGraphicsBeginImageContext(onView.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -39,7 +38,6 @@
     
     CGContextSetStrokeColorWithColor(context, _color);
     CGContextSetLineWidth(context, _width);
-    
     
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, fromPt.x, fromPt.y);
@@ -50,6 +48,7 @@
     
     UIGraphicsEndImageContext();
 }
+
 #pragma mark - Smooth Line Draw
 - (void)drawPath:(UIView *)onView WithPoints:(NSArray *)points andColor:(CGColorRef)colorRef
 {
@@ -62,7 +61,6 @@
     CGContextSetStrokeColorWithColor(context, colorRef);
 	CGContextSetLineWidth(context, _width);
 
-    
 	CGContextBeginPath(context);
     
     int count = [points count];
@@ -78,18 +76,16 @@
     [self combineImage:UIGraphicsGetImageFromCurrentImageContext()];
 
 	UIGraphicsEndImageContext();
-
 }
+
 #pragma mark -
 #pragma mark Image Saving
-
 -(void)combineImage:(UIImage*)overlayImage
 {
     if (!_currentImage) {
         _currentImage = [UIImage new];
         _clearImage   = [UIImage new];
     }
-
     UIGraphicsBeginImageContext(overlayImage.size);
     
     if (_isClearImage) {
@@ -101,8 +97,7 @@
         [_imageView setImage:_clearImage];
 
         _isClearImage = NO;
-    }
-    else {
+    } else {
         [[_imageView image] drawAtPoint:CGPointZero];
         CGRect imageRect = CGRectMake(0, 0, overlayImage.size.width, overlayImage.size.height);
         [overlayImage drawInRect:imageRect blendMode:kCGBlendModeNormal alpha:1.0];
@@ -110,7 +105,6 @@
         _currentImage = UIGraphicsGetImageFromCurrentImageContext();
         [_imageView setImage:_currentImage];
     }
-    
     UIGraphicsEndImageContext();
 }
 
