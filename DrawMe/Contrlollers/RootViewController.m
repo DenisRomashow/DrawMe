@@ -45,9 +45,6 @@ static const int kSegmentsNumber = 4;
 
     BOOL _isPaletteOpened;
     BOOL _isOneFingerTal;
-    
-    int     _douglasIndex ;
-    float   _douglasMax;
 }
 @end
 
@@ -209,46 +206,40 @@ static const int kSegmentsNumber = 4;
 }
 
 #pragma mark - Drawing Smooth
--(NSArray*)findPointWithMaximumDistance:(NSArray*)points andCount:(int)count
-{
-    _douglasIndex   = 0;
-    _douglasMax     = 0;
-    for(int i = 1; i < count - 1; i++) {
-        CGPoint point = [[points objectAtIndex:i] CGPointValue];
-        CGPoint lineA = [[points objectAtIndex:0] CGPointValue];
-        CGPoint lineB = [[points objectAtIndex:count - 1] CGPointValue];
-        float d = [self perpendicularDistance:point lineA:lineA lineB:lineB];
-        if(d > _douglasMax) {
-            _douglasIndex = i;
-            _douglasMax = d;
-        }
-    }
-    return points;
-}
-
-
 - (NSArray *)douglasPeucker:(NSArray *)points epsilon:(float)epsilon
 {
     int count = [points count];
     if(count < 3) {
         return points;
     }
-//    [points arrayByAddingObjectsFromArray:[self findPointWithMaximumDistance:points andCount:count]];
-    //Find the point with the maximum distance
-    float dmax  = 0;
-    int   index = 0;
+    CGSize distance = [self findPointWithMaximumDistance:points andCount:count];
+    
+    NSArray *resultList = [self recursivelySimplifyArray:points count:count
+                                   withDistance:distance andEpilon:epsilon];
+    return resultList;
+}
+
+-(CGSize)findPointWithMaximumDistance:(NSArray*)points andCount:(int)count
+{
+    CGSize distance;
     for(int i = 1; i < count - 1; i++) {
         CGPoint point = [[points objectAtIndex:i] CGPointValue];
         CGPoint lineA = [[points objectAtIndex:0] CGPointValue];
         CGPoint lineB = [[points objectAtIndex:count - 1] CGPointValue];
         float d = [self perpendicularDistance:point lineA:lineA lineB:lineB];
-        if(d > dmax) {
-            index = i;
-            dmax = d;
+        if(d > distance.height) {
+            distance.width  = i;
+            distance.height = d;
         }
     }
+    return distance;
+}
+
+-(NSArray*)recursivelySimplifyArray:(NSArray*)points count:(int)count withDistance:(CGSize)distance andEpilon:(float)epsilon
+{
+    float dmax  = distance.height;
+    int   index = distance.width;
     
-    //If max distance is greater than epsilon, recursively simplify
     NSArray *resultList;
     if(dmax > epsilon) {
         NSArray *recResults1 = [self douglasPeucker:[points subarrayWithRange:NSMakeRange(0, index + 1)] epsilon:epsilon];
@@ -298,7 +289,6 @@ static const int kSegmentsNumber = 4;
     }
     
     NSMutableArray *resultArray = [NSMutableArray array];
-    
     {
         int i = 0; // first control point
         [resultArray addObject:[points objectAtIndex:0]];
@@ -311,7 +301,6 @@ static const int kSegmentsNumber = 4;
             [resultArray addObject:[NSValue valueWithCGPoint:CGPointMake(px, py)]];
         }
     }
-    
     for (int i = 1; i < count-2; i++) {
         // the first interpolated point is always the original control point
         [resultArray addObject:[points objectAtIndex:i]];
@@ -325,7 +314,6 @@ static const int kSegmentsNumber = 4;
             [resultArray addObject:[NSValue valueWithCGPoint:CGPointMake(px, py)]];
         }
     }
-    
     {
         int i = count-2; // second to last control point
         [resultArray addObject:[points objectAtIndex:i]];
