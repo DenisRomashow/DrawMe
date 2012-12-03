@@ -13,13 +13,16 @@
 		6B00F3B7165289C10015D8C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3B5165289C10015D8C5 /* InfoPlist.strings */; };
 		6B00F3B9165289C10015D8C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B00F3B8165289C10015D8C5 /* main.m */; };
 		6B00F3BD165289C10015D8C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B00F3BC165289C10015D8C5 /* AppDelegate.m */; };
-		6B00F3BF165289C10015D8C5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3BE165289C10015D8C5 /* Default.png */; };
-		6B00F3C1165289C10015D8C5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3C0165289C10015D8C5 /* Default@2x.png */; };
-		6B00F3C3165289C10015D8C5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3C2165289C10015D8C5 /* Default-568h@2x.png */; };
 		6B00F3C6165289C10015D8C5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3C4165289C10015D8C5 /* MainStoryboard.storyboard */; };
 		6B0AFA661663C43800F68040 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0AFA651663C43800F68040 /* RootViewController.m */; };
 		6B3049A1165CF80B00CB407B /* paletteViewImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B3049A0165CF80B00CB407B /* paletteViewImage@2x.png */; };
-		6B37839D166509530051AF1C /* DrawHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B37839C166509530051AF1C /* DrawHelper.m */; };
+		6B5948CF166618CE00C10621 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B5948CE166618CE00C10621 /* icon.png */; };
+		6B5948D216661B8000C10621 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B5948D116661B8000C10621 /* icon@2x.png */; };
+		6B6E392B166D56BF006FC2BE /* DrawHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B6E3927166D56BF006FC2BE /* DrawHelper.m */; };
+		6B6E392C166D56BF006FC2BE /* LineSmoother.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B6E392A166D56BF006FC2BE /* LineSmoother.m */; };
+		6BABCDDE166616FE00F10CC2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABCDDD166616FE00F10CC2 /* Default-568h@2x.png */; };
+		6BABCDE21666171D00F10CC2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABCDE11666171D00F10CC2 /* Default.png */; };
+		6BABCDE41666174000F10CC2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BABCDE31666174000F10CC2 /* Default@2x.png */; };
 		6BE9364B165CE15D0063F9E4 /* paletteViewImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BE93649165CE15D0063F9E4 /* paletteViewImage.png */; };
 /* End PBXBuildFile section */
 
@@ -41,8 +44,15 @@
 		6B0AFA641663C43800F68040 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Contrlollers/RootViewController.h; sourceTree = "<group>"; };
 		6B0AFA651663C43800F68040 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Contrlollers/RootViewController.m; sourceTree = "<group>"; };
 		6B3049A0165CF80B00CB407B /* paletteViewImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paletteViewImage@2x.png"; path = "Images/paletteViewImage@2x.png"; sourceTree = "<group>"; };
-		6B37839B166509530051AF1C /* DrawHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawHelper.h; path = DrawMe/Classes/DrawHelper.h; sourceTree = "<group>"; };
-		6B37839C166509530051AF1C /* DrawHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawHelper.m; path = DrawMe/Classes/DrawHelper.m; sourceTree = "<group>"; };
+		6B5948CE166618CE00C10621 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		6B5948D116661B8000C10621 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		6B6E3926166D56BF006FC2BE /* DrawHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawHelper.h; sourceTree = "<group>"; };
+		6B6E3927166D56BF006FC2BE /* DrawHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawHelper.m; sourceTree = "<group>"; };
+		6B6E3929166D56BF006FC2BE /* LineSmoother.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSmoother.h; sourceTree = "<group>"; };
+		6B6E392A166D56BF006FC2BE /* LineSmoother.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineSmoother.m; sourceTree = "<group>"; };
+		6BABCDDD166616FE00F10CC2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6BABCDE11666171D00F10CC2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		6BABCDE31666174000F10CC2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6BE93649165CE15D0063F9E4 /* paletteViewImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paletteViewImage.png; path = Images/paletteViewImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +73,11 @@
 		6B00F39D165289C10015D8C5 = {
 			isa = PBXGroup;
 			children = (
+				6B5948D116661B8000C10621 /* icon@2x.png */,
+				6B5948CE166618CE00C10621 /* icon.png */,
+				6BABCDE31666174000F10CC2 /* Default@2x.png */,
+				6BABCDE11666171D00F10CC2 /* Default.png */,
+				6BABCDDD166616FE00F10CC2 /* Default-568h@2x.png */,
 				6B00F3B2165289C10015D8C5 /* DrawMe */,
 				6B00F3AB165289C10015D8C5 /* Frameworks */,
 				6B00F3A9165289C10015D8C5 /* Products */,
@@ -119,8 +134,8 @@
 		6B00F3D5165293F00015D8C5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6B37839B166509530051AF1C /* DrawHelper.h */,
-				6B37839C166509530051AF1C /* DrawHelper.m */,
+				6B6E3925166D56BF006FC2BE /* Helpers */,
+				6B6E3928166D56BF006FC2BE /* LineSmoother */,
 			);
 			name = Classes;
 			path = ..;
@@ -140,6 +155,26 @@
 			children = (
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		6B6E3925166D56BF006FC2BE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6B6E3926166D56BF006FC2BE /* DrawHelper.h */,
+				6B6E3927166D56BF006FC2BE /* DrawHelper.m */,
+			);
+			name = Helpers;
+			path = DrawMe/Classes/Helpers;
+			sourceTree = "<group>";
+		};
+		6B6E3928166D56BF006FC2BE /* LineSmoother */ = {
+			isa = PBXGroup;
+			children = (
+				6B6E3929166D56BF006FC2BE /* LineSmoother.h */,
+				6B6E392A166D56BF006FC2BE /* LineSmoother.m */,
+			);
+			name = LineSmoother;
+			path = DrawMe/Classes/LineSmoother;
 			sourceTree = "<group>";
 		};
 		6BE93648165CDDE60063F9E4 /* Images */ = {
@@ -203,12 +238,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B00F3B7165289C10015D8C5 /* InfoPlist.strings in Resources */,
-				6B00F3BF165289C10015D8C5 /* Default.png in Resources */,
-				6B00F3C1165289C10015D8C5 /* Default@2x.png in Resources */,
-				6B00F3C3165289C10015D8C5 /* Default-568h@2x.png in Resources */,
 				6B00F3C6165289C10015D8C5 /* MainStoryboard.storyboard in Resources */,
 				6BE9364B165CE15D0063F9E4 /* paletteViewImage.png in Resources */,
 				6B3049A1165CF80B00CB407B /* paletteViewImage@2x.png in Resources */,
+				6BABCDDE166616FE00F10CC2 /* Default-568h@2x.png in Resources */,
+				6BABCDE21666171D00F10CC2 /* Default.png in Resources */,
+				6BABCDE41666174000F10CC2 /* Default@2x.png in Resources */,
+				6B5948CF166618CE00C10621 /* icon.png in Resources */,
+				6B5948D216661B8000C10621 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +259,8 @@
 				6B00F3B9165289C10015D8C5 /* main.m in Sources */,
 				6B00F3BD165289C10015D8C5 /* AppDelegate.m in Sources */,
 				6B0AFA661663C43800F68040 /* RootViewController.m in Sources */,
-				6B37839D166509530051AF1C /* DrawHelper.m in Sources */,
+				6B6E392B166D56BF006FC2BE /* DrawHelper.m in Sources */,
+				6B6E392C166D56BF006FC2BE /* LineSmoother.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

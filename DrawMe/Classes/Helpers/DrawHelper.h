@@ -14,10 +14,9 @@
 @property (nonatomic, assign) CGColorRef color;
 @property (nonatomic, assign) CGFloat width;
 
-
 - (void)drawLineFromPoint:(CGPoint)pt toPoint:(CGPoint)pt2;
-
 - (void)drawPath:(UIView *)onView WithPoints:(NSArray *)points andColor:(CGColorRef)colorRef;
 
 - (void)clearView;
+
 @end

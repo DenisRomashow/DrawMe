@@ -12,10 +12,9 @@
 
 @interface RootViewController : UIViewController
 
-
 @property (weak, nonatomic) IBOutlet UIImageView *viewForDraw;
 
--(IBAction)test:(id)sender;
 -(void)penButtonDidPressed:(UIButton*)button;
 -(void)crayonButtonDidPressed:(UIButton*)button;
+
 @end

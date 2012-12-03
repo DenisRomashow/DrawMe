@@ -15,6 +15,15 @@
     UIImage *_emptyImage;
     BOOL _isClearImage;
 }
+
+-(void)drawLineFromPoint:(CGPoint)pt toPoint:(CGPoint)pt2;
+-(void)drawLineOnView:(UIView *)onView fromPoint:(CGPoint)fromPt toPoint:(CGPoint)toPt;
+-(void)drawPath:(UIView *)onView WithPoints:(NSArray *)points andColor:(CGColorRef)colorRef;
+
+-(void)combineImage:(UIImage*)overlayImage;
+
+-(void)clearView;
+
 @end
 
 
@@ -23,7 +32,7 @@
 
 #pragma mark -
 #pragma mark Drawing
-- (void)drawLineFromPoint:(CGPoint)pt toPoint:(CGPoint)pt2
+-(void)drawLineFromPoint:(CGPoint)pt toPoint:(CGPoint)pt2
 {
     [self drawLineOnView:_imageView fromPoint:pt toPoint:pt2];
 }
@@ -50,7 +59,7 @@
 }
 
 #pragma mark - Smooth Line Draw
-- (void)drawPath:(UIView *)onView WithPoints:(NSArray *)points andColor:(CGColorRef)colorRef
+-(void)drawPath:(UIView *)onView WithPoints:(NSArray *)points andColor:(CGColorRef)colorRef
 {
     UIGraphicsBeginImageContext(onView.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -111,7 +120,8 @@
 #pragma mark -
 #pragma mark Clearing
 
--(void)clearView {
+-(void)clearView
+{
     if (!_emptyImage) {
         _emptyImage = [UIImage new];
     }
