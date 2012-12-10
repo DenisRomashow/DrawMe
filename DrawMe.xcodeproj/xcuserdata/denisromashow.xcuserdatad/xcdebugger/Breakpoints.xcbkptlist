@@ -147,12 +147,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "DrawMe/Contrlollers/RootViewController.m"
-         timestampString = "376262972.307496"
+         timestampString = "376845875.683557"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "190"
-         endingLineNumber = "190"
-         landmarkName = "-touchesMoved:withEvent:"
+         startingLineNumber = "227"
+         endingLineNumber = "227"
+         landmarkName = "-touchesEnded:withEvent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -160,12 +160,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "DrawMe/Contrlollers/RootViewController.m"
-         timestampString = "376262975.163922"
+         timestampString = "376845875.683557"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "191"
-         endingLineNumber = "191"
-         landmarkName = "-touchesMoved:withEvent:"
+         startingLineNumber = "228"
+         endingLineNumber = "228"
+         landmarkName = "-touchesEnded:withEvent:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -173,12 +173,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "DrawMe/Contrlollers/RootViewController.m"
-         timestampString = "376262990.356001"
+         timestampString = "376845875.683557"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "198"
-         endingLineNumber = "198"
-         landmarkName = "-touchesMoved:withEvent:"
+         startingLineNumber = "239"
+         endingLineNumber = "239"
+         landmarkName = "-motionEnded:withEvent:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "DrawMe/Contrlollers/RootViewController.m"
+         timestampString = "376845875.683557"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "292"
+         endingLineNumber = "292"
+         landmarkName = "-eraseButtonDidPressed:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "DrawMe/Contrlollers/RootViewController.m"
+         timestampString = "376845875.683557"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
+         landmarkName = "-loadPaletteViewItems"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "DrawMe/Contrlollers/RootViewController.m"
+         timestampString = "376845830.609838"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "309"
+         endingLineNumber = "309"
+         landmarkName = "-showPalette:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

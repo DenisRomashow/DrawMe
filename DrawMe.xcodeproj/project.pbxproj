@@ -13,8 +13,9 @@
 		6B00F3B7165289C10015D8C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3B5165289C10015D8C5 /* InfoPlist.strings */; };
 		6B00F3B9165289C10015D8C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B00F3B8165289C10015D8C5 /* main.m */; };
 		6B00F3BD165289C10015D8C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B00F3BC165289C10015D8C5 /* AppDelegate.m */; };
-		6B00F3C6165289C10015D8C5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B00F3C4165289C10015D8C5 /* MainStoryboard.storyboard */; };
 		6B0AFA661663C43800F68040 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0AFA651663C43800F68040 /* RootViewController.m */; };
+		6B0D62B9166E9159004EBA16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B0D62B5166E9159004EBA16 /* InfoPlist.strings */; };
+		6B0D62BA166E9159004EBA16 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B0D62B7166E9159004EBA16 /* MainStoryboard.storyboard */; };
 		6B3049A1165CF80B00CB407B /* paletteViewImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B3049A0165CF80B00CB407B /* paletteViewImage@2x.png */; };
 		6B5948CF166618CE00C10621 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B5948CE166618CE00C10621 /* icon.png */; };
 		6B5948D216661B8000C10621 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B5948D116661B8000C10621 /* icon@2x.png */; };
@@ -40,9 +41,10 @@
 		6B00F3BE165289C10015D8C5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6B00F3C0165289C10015D8C5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6B00F3C2165289C10015D8C5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		6B00F3C5165289C10015D8C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		6B0AFA641663C43800F68040 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Contrlollers/RootViewController.h; sourceTree = "<group>"; };
 		6B0AFA651663C43800F68040 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Contrlollers/RootViewController.m; sourceTree = "<group>"; };
+		6B0D62B6166E9159004EBA16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		6B0D62B8166E9159004EBA16 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		6B3049A0165CF80B00CB407B /* paletteViewImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paletteViewImage@2x.png"; path = "Images/paletteViewImage@2x.png"; sourceTree = "<group>"; };
 		6B5948CE166618CE00C10621 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		6B5948D116661B8000C10621 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
@@ -111,7 +113,6 @@
 				6B5817951653BCDD00088FA0 /* Extensions */,
 				6B00F3BB165289C10015D8C5 /* AppDelegate.h */,
 				6B00F3BC165289C10015D8C5 /* AppDelegate.m */,
-				6B00F3C4165289C10015D8C5 /* MainStoryboard.storyboard */,
 				6B00F3B3165289C10015D8C5 /* Supporting Files */,
 			);
 			path = DrawMe;
@@ -120,6 +121,7 @@
 		6B00F3B3165289C10015D8C5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6B0D62B4166E9159004EBA16 /* en.lproj */,
 				6B00F3B4165289C10015D8C5 /* DrawMe-Info.plist */,
 				6B00F3B5165289C10015D8C5 /* InfoPlist.strings */,
 				6B00F3B8165289C10015D8C5 /* main.m */,
@@ -148,6 +150,15 @@
 				6B0AFA651663C43800F68040 /* RootViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		6B0D62B4166E9159004EBA16 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				6B0D62B5166E9159004EBA16 /* InfoPlist.strings */,
+				6B0D62B7166E9159004EBA16 /* MainStoryboard.storyboard */,
+			);
+			path = en.lproj;
 			sourceTree = "<group>";
 		};
 		6B5817951653BCDD00088FA0 /* Extensions */ = {
@@ -221,6 +232,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 6B00F39D165289C10015D8C5;
 			productRefGroup = 6B00F3A9165289C10015D8C5 /* Products */;
@@ -238,7 +250,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B00F3B7165289C10015D8C5 /* InfoPlist.strings in Resources */,
-				6B00F3C6165289C10015D8C5 /* MainStoryboard.storyboard in Resources */,
 				6BE9364B165CE15D0063F9E4 /* paletteViewImage.png in Resources */,
 				6B3049A1165CF80B00CB407B /* paletteViewImage@2x.png in Resources */,
 				6BABCDDE166616FE00F10CC2 /* Default-568h@2x.png in Resources */,
@@ -246,6 +257,8 @@
 				6BABCDE41666174000F10CC2 /* Default@2x.png in Resources */,
 				6B5948CF166618CE00C10621 /* icon.png in Resources */,
 				6B5948D216661B8000C10621 /* icon@2x.png in Resources */,
+				6B0D62B9166E9159004EBA16 /* InfoPlist.strings in Resources */,
+				6B0D62BA166E9159004EBA16 /* MainStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,10 +288,18 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		6B00F3C4165289C10015D8C5 /* MainStoryboard.storyboard */ = {
+		6B0D62B5166E9159004EBA16 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6B00F3C5165289C10015D8C5 /* en */,
+				6B0D62B6166E9159004EBA16 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6B0D62B7166E9159004EBA16 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6B0D62B8166E9159004EBA16 /* en */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -344,7 +365,7 @@
 				INFOPLIST_FILE = "DrawMe/DrawMe-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -357,7 +378,7 @@
 				INFOPLIST_FILE = "DrawMe/DrawMe-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -10,7 +10,7 @@
 //#import "DrawView.h"
 
 
-@interface RootViewController : UIViewController
+@interface RootViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *viewForDraw;
 
