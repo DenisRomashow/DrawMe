@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "DrawView.h"
-
 
 @interface RootViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *viewForDraw;
+@property (weak, nonatomic) IBOutlet UIButton *redoButton;
 
--(void)penButtonDidPressed:(UIButton*)button;
--(void)crayonButtonDidPressed:(UIButton*)button;
+- (IBAction)tweetMessage:(id)sender;
+- (IBAction)undoButtonDidPressed:(id)sender;
+- (IBAction)redoButtonDidPressed:(id)sender;
 
 @end

@@ -9,12 +9,13 @@
 #import "RootViewController.h"
 #import "DrawHelper.h"
 #import "LineSmoother.h"
+#import "UndoManager.h"
+#import "Social/Social.h"
 
 #define blackColor  [UIColor blackColor]
 #define redColor    [UIColor redColor]
 #define yellowColor [UIColor yellowColor]
 #define greenColor  [UIColor greenColor]
-#define whiteColor  [UIColor whiteColor]
 #define blueColor   [UIColor blueColor]
 #define orangeColor [UIColor orangeColor]
 #define purpleColor [UIColor purpleColor]
@@ -36,8 +37,7 @@ static const CGFloat kPenWidth    = 2;
 static const CGFloat kCrayonWidth = 7;
 static const CGFloat kUsualWidth  = 3;
 
-static const CGFloat kTableHeight = 31
-;
+static const CGFloat kTableHeight = 31;
 
 static const int kEpsilontNumber = 2;
 static const int kSegmentsNumber = 4;
@@ -48,6 +48,7 @@ static const int kSegmentsNumber = 4;
 {
     DrawHelper *_drawHelper;
     LineSmoother *_lineSmoother;
+    UndoManager *_undoManager;
     
     UIImageView *_paletteView;
     CGPoint _paletteCenter;
@@ -73,6 +74,7 @@ static const int kSegmentsNumber = 4;
 
 -(void)showPalette:(UITapGestureRecognizer *)gestRecognizer;
 -(void)hidePalette;
+//-(void)hideRedoButton;
 
 @end
 
@@ -98,16 +100,17 @@ static const int kSegmentsNumber = 4;
     _drawHelper.imageView = self.viewForDraw;
     
     _lineSmoother = [LineSmoother new];
+    _undoManager = [UndoManager new];
 
     _paletteView = [[UIImageView alloc] initWithFrame:CGRectMake(_drawHelper.imageView.frame.size.width + kPaletteButtonWidth * kCrayonWidth,
                                                                  0,
                                                                  kPaletteViewWidth,
                                                                  kPaletteViewHeight)];
     
-    _colorsTableView = [[UITableView alloc] initWithFrame:CGRectMake(kPaletteButtonPosition,
+    _colorsTableView = [[UITableView alloc] initWithFrame:CGRectMake(kPaletteButtonPosition-5,
                                                                      kPaletteButtonPosition,
                                                                      kPaletteButtonWidth,
-                                                                     kPaletteToolButtonPosition - kPaletteButtonHeight+kCrayonWidth)];
+                                                                     kPaletteButtonHeight*5)];
     [_colorsTableView setDelegate:self];
     [_colorsTableView setDataSource:self];
     
@@ -123,13 +126,17 @@ static const int kSegmentsNumber = 4;
     doubleTap.numberOfTapsRequired = 2;
     
     [_drawHelper.imageView addSubview:_paletteView];
-    [self.view addGestureRecognizer:doubleTap];
+    [_drawHelper.imageView addGestureRecognizer:doubleTap];
 }
 
 
 #pragma mark - addToViewDidLoad
 -(void)loadPaletteViewItems
 {
+    UIView *colorView = [[UIView alloc]  initWithFrame:CGRectMake(kPaletteButtonPosition,
+                                                                  kPaletteButtonPosition,
+                                                                  kPaletteButtonWidth,
+                                                                  kPaletteButtonHeight*5)];
     if (self.view.frame.size.height == 568) {
         _paletteCenter = iPhone5PaletteCenter;
     } else {
@@ -137,9 +144,12 @@ static const int kSegmentsNumber = 4;
     }
     _paletteView.center = _paletteCenter;
     
-    [_colorsTableView setScrollEnabled:YES];
+    [_colorsTableView setShowsVerticalScrollIndicator:NO];
+    [_colorsTableView setShowsHorizontalScrollIndicator:NO];
+    
     _colorsTableView.rowHeight = kTableHeight;
-    _colorsTableView.backgroundColor = blackColor;
+    _colorsTableView.backgroundColor = [UIColor clearColor];
+    _colorsTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     UIButton *penButton = [UIButton buttonWithType: UIButtonTypeRoundedRect];
     [penButton setFrame:CGRectMake(kPaletteButtonPosition, kPaletteToolButtonPosition, kPaletteButtonWidth,kPaletteButtonHeight)];
@@ -165,9 +175,10 @@ static const int kSegmentsNumber = 4;
     [_paletteView addSubview:penButton];
     [_paletteView addSubview:crayonButton];
     [_paletteView addSubview:eraseButton];
-    
-    [_paletteView addSubview:_colorsTableView];
-}
+    [colorView addSubview:_colorsTableView];
+
+    [_paletteView addSubview:colorView];
+    }
 
 #pragma mark - Get current position
 -(void)touchPosition:(NSSet *)touches
@@ -200,9 +211,6 @@ static const int kSegmentsNumber = 4;
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
-    if (!_pointsCount) {
-        _pointsCount = 0;
-    }
     if (![self isPaletteViewTouched:touches]) {
         [self touchPosition:touches];
         if ([_pointsList count] > _pointsCount+1) {
@@ -224,7 +232,7 @@ static const int kSegmentsNumber = 4;
                                                        epsilon:kEpsilontNumber];
     NSArray *splinePoints = [_lineSmoother catmullRomSpline:generalizedPoints
                                                    segments:kSegmentsNumber];
-        
+    [_undoManager addObject:splinePoints];
     [_drawHelper drawPath:_drawHelper.imageView
                WithPoints:splinePoints
                  andColor:_currentColor.CGColor];
@@ -253,30 +261,84 @@ static const int kSegmentsNumber = 4;
     return [_textColorList count];
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    cell.backgroundColor = [_textColorList objectAtIndex:indexPath.row];
-}
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"Cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell==nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle
                                      reuseIdentifier:cellIdentifier];
+        cell.contentView.backgroundColor  = [_textColorList objectAtIndex:[indexPath item]];
     }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _currentColor = [_textColorList objectAtIndex:indexPath.row];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UIImageView *backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(44, 5, 100, 100)];
+    backgroundImage.image = [UIImage imageNamed:@"check.png"];
+    
+    [cell setSelected:YES animated:YES];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+    [cell.selectedBackgroundView addSubview:backgroundImage];
+
+    _currentColor = [_textColorList objectAtIndex:[indexPath item]];
     [_drawHelper setColor:_currentColor.CGColor];
 }
 
 #pragma mark - Action Buttons
+
+- (IBAction)redoButtonDidPressed:(id)sender
+{
+    [_drawHelper clearView];
+    for (NSArray *array in [_undoManager redoObject]) {
+        [_drawHelper drawPath:_drawHelper.imageView
+                   WithPoints:array
+                     andColor:_currentColor.CGColor];
+        
+    }
+}
+
+- (IBAction)tweetMessage:(id)sender {
+
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        SLComposeViewControllerCompletionHandler myBlock = ^(SLComposeViewControllerResult result)
+        {
+            if (result == SLComposeViewControllerResultCancelled)
+                NSLog(@"Cancelled");
+            else NSLog(@"Done");
+            
+            [controller dismissViewControllerAnimated:YES completion:Nil];
+        };
+        
+        
+        controller.completionHandler = myBlock;
+        
+        
+        [controller setInitialText:@"I draw it with DrawMe"];
+//        [controller addURL:[NSURL URLWithString:@"http://idev.by"]];
+        [controller addImage:_drawHelper.imageView.image];
+        
+        
+        [self presentViewController:controller animated:YES completion:Nil];
+        
+        
+    } else NSLog(@"UnAvailable");
+}
+
+- (IBAction)undoButtonDidPressed:(id)sender
+{
+    [_drawHelper clearView];
+    for (NSArray *array in [_undoManager undoObject]) {
+        [_drawHelper drawPath:_drawHelper.imageView
+                   WithPoints:array
+                     andColor:_currentColor.CGColor];
+
+    }
+}
 
 -(void)penButtonDidPressed:(UIButton*)button
 {
@@ -290,6 +352,7 @@ static const int kSegmentsNumber = 4;
 
 -(void)eraseButtonDidPressed:(UIButton*)button
 {
+    [_undoManager clearManager];
     [_drawHelper clearView];
 }
 
@@ -297,20 +360,27 @@ static const int kSegmentsNumber = 4;
 -(void)showPalette:(UITapGestureRecognizer *)gestRecognizer
 {
     CGPoint palletTap = [gestRecognizer locationInView:_paletteView];
-
     if (palletTap.x > 0 && palletTap.y > 0) {    
         return;
     }
+        
     if (!_isPaletteOpened)
     {
-        [UIView animateWithDuration:1 animations:^{
+        _isPaletteOpened = YES;
+        [UIView animateWithDuration:0.6 animations:^{
+
             _paletteCenter.x -= kPaletteViewWidth;
             _paletteView.center = _paletteCenter;
+            _redoButton.alpha = !_isPaletteOpened;
+            [[self viewForDraw] setUserInteractionEnabled:NO];
+            
+        } completion:^(BOOL finished){
+            [[self viewForDraw] setUserInteractionEnabled:YES];
         }];
-        _isPaletteOpened = YES;
+        
     } else {
+         _isPaletteOpened = NO;
         [self hidePalette];
-        _isPaletteOpened = NO;
     }
     [_pointsList removeAllObjects];
     _pointsCount = [_pointsList count];
@@ -318,9 +388,15 @@ static const int kSegmentsNumber = 4;
 
 -(void)hidePalette
 {
-    [UIView animateWithDuration:1 animations:^{
+    [UIView animateWithDuration:0.6 animations:^{
         _paletteCenter.x += kPaletteViewWidth;
         _paletteView.center = _paletteCenter;
+        _redoButton.alpha = !_isPaletteOpened;
+        [[self viewForDraw] setUserInteractionEnabled:YES];
+    }completion:^(BOOL finished){
+        [[self viewForDraw] setUserInteractionEnabled:YES];
     }];
+    
 }
+
 @end

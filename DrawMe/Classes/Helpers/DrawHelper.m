@@ -28,7 +28,16 @@
 
 
 @implementation DrawHelper
-
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        _currentImage   = [UIImage new];
+        _clearImage     = [UIImage new];
+        _emptyImage     = [UIImage new];
+    }
+    return self;
+}
 
 #pragma mark -
 #pragma mark Drawing
@@ -91,12 +100,7 @@
 #pragma mark Image Saving
 -(void)combineImage:(UIImage*)overlayImage
 {
-    if (!_currentImage) {
-        _currentImage = [UIImage new];
-        _clearImage   = [UIImage new];
-    }
     UIGraphicsBeginImageContext(overlayImage.size);
-    
     if (_isClearImage) {
         [_clearImage drawAtPoint:CGPointZero];
         CGRect imageRect = CGRectMake(0, 0, overlayImage.size.width, overlayImage.size.height);
@@ -122,9 +126,6 @@
 
 -(void)clearView
 {
-    if (!_emptyImage) {
-        _emptyImage = [UIImage new];
-    }
     _clearImage   = _emptyImage;
     _currentImage = _emptyImage;
     [_imageView setImage:_currentImage];
